@@ -24,7 +24,8 @@ class CategoryAdapter(context: Context, categories: List<Category>): BaseAdapter
 
         val category = categories[position]
 
-        val resourceID = context.resources.getIdentifier(category.image, "drawable", context.packageName)
+        //val resourceID = context.resources.getIdentifier(category.image, "drawable", context.packageName)
+        val resourceID = context.resources.getIdentifier("ic_launcher_background", "drawable", context.packageName)
         categoryImage.setImageResource(resourceID)
 
         categoryTitle.text = category.title
