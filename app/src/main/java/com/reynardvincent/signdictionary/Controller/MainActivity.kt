@@ -22,5 +22,6 @@ class MainActivity : AppCompatActivity() {
         categoryAdapter = CategoryAdapter(this, SampleData.categories)
 
         category_view.adapter = categoryAdapter
+        appName.text = "Signs Dictionary"
     }
 }
