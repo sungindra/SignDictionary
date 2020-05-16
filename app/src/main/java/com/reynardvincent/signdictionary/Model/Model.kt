@@ -2,6 +2,8 @@ package com.reynardvincent.signdictionary.Model
 
 import java.net.URL
 
+const val extraCategory = "category"
+
 class Model {
     var dictionaryURL = URL("")
 }
