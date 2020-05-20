@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.reynardvincent.signdictionary.Model.Dictionary
 import com.reynardvincent.signdictionary.R
 
-class DictionaryAdapter(val context: Context, val dictionaries: List<Dictionary>) : RecyclerView.Adapter<DictionaryAdapter.DictionaryHolder>(){
+class DictionaryAdapter(val context: Context, val dictionaries: List<Dictionary>, val signClick: (Dictionary) -> Unit) : RecyclerView.Adapter<DictionaryAdapter.DictionaryHolder>(){
 
     inner class DictionaryHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val dictionaryImage = itemView.findViewById<ImageView>(R.id.signImage)
@@ -23,6 +23,7 @@ class DictionaryAdapter(val context: Context, val dictionaries: List<Dictionary>
             dictionaryImage?.setImageResource(resourceID)
             dictionaryTitle?.text = dictionary.key
             dictionaryDetail?.text = dictionary.value
+            itemView.setOnClickListener { signClick(dictionary) }
         }
     }
 

@@ -1,14 +1,15 @@
 package com.reynardvincent.signdictionary.Controller
 
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.reynardvincent.signdictionary.Adapters.DictionaryAdapter
-import com.reynardvincent.signdictionary.Model.Dictionary
 import com.reynardvincent.signdictionary.Model.SampleData
 import com.reynardvincent.signdictionary.Model.extraCategory
+import com.reynardvincent.signdictionary.Model.extraDictionaryKey
+import com.reynardvincent.signdictionary.Model.extraDictionaryValue
 import com.reynardvincent.signdictionary.R
 import kotlinx.android.synthetic.main.activity_searched_view.*
 
@@ -22,9 +23,14 @@ class SearchedView : AppCompatActivity() {
 
         val categoryType = intent.getStringExtra(extraCategory)
         TypeTitle.text = categoryType
-        dictionaryAdapter = DictionaryAdapter(this, SampleData.getDictionary(categoryType))
+        dictionaryAdapter = DictionaryAdapter(this, SampleData.getDictionary(categoryType)){ dictionary ->
+            val detailIntent = Intent(this, DetailView:: class.java)
+            detailIntent.putExtra(extraDictionaryKey, dictionary.key)
+            detailIntent.putExtra(extraDictionaryValue, dictionary.value)
+            startActivity(detailIntent)
+        }
 
-        var numColumn = 2
+        val numColumn :Int
         val orientation = resources.configuration.orientation
         val screenSize = resources.configuration.screenWidthDp
 
