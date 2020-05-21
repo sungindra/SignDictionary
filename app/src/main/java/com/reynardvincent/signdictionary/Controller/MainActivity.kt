@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.reynardvincent.signdictionary.Adapters.CategoryRecycleAdapter
 import com.reynardvincent.signdictionary.Model.SampleData
 import com.reynardvincent.signdictionary.Model.extraCategory
+import com.reynardvincent.signdictionary.Model.signType
 import com.reynardvincent.signdictionary.R
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -17,10 +18,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        var type = ""
+        if (typeSwitching.isChecked){
+            type = "bisindo"
+        } else {
+            type = "sibi"
+        }
 
         categoryAdapter = CategoryRecycleAdapter(this, SampleData.categories){ category ->
             val dictionaryIntent = Intent(this, SearchedView:: class.java)
             dictionaryIntent.putExtra(extraCategory, category.title)
+            dictionaryIntent.putExtra(signType, type)
             startActivity(dictionaryIntent)
         }
 

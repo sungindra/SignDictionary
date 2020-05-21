@@ -6,10 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.reynardvincent.signdictionary.Adapters.DictionaryAdapter
-import com.reynardvincent.signdictionary.Model.SampleData
-import com.reynardvincent.signdictionary.Model.extraCategory
-import com.reynardvincent.signdictionary.Model.extraDictionaryKey
-import com.reynardvincent.signdictionary.Model.extraDictionaryValue
+import com.reynardvincent.signdictionary.Model.*
 import com.reynardvincent.signdictionary.R
 import kotlinx.android.synthetic.main.activity_searched_view.*
 
@@ -22,6 +19,14 @@ class SearchedView : AppCompatActivity() {
         setContentView(R.layout.activity_searched_view)
 
         val categoryType = intent.getStringExtra(extraCategory)
+        val signType = intent.getStringExtra(signType)
+
+        if (signType == "sibi"){
+
+        } else {
+
+        }
+
         TypeTitle.text = categoryType
         dictionaryAdapter = DictionaryAdapter(this, SampleData.getDictionary(categoryType)){ dictionary ->
             val detailIntent = Intent(this, DetailView:: class.java)
