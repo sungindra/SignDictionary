@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         var type = ""
+        // typeSwitching switch is not functional, cannot display title and determined the status condition
         if (typeSwitching.isChecked){
             type = "bisindo"
         } else {

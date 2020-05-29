@@ -1,6 +1,17 @@
 package com.reynardvincent.signdictionary.Model
 
+import android.content.Context
+import android.util.Log
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONException
+import org.json.JSONObject
+
 object SampleData {
+    val dictionaryURL = "http://signtranslate.herokuapp.com/api/signs/"
+    val imageURL = "http://signtranslate.herokuapp.com/signs/"
+
     var categories = arrayListOf<Category>(
         Category("Abjad", "Abjad"),
         Category("Kata Kerja", "Kata kerja"),
@@ -9,20 +20,7 @@ object SampleData {
         Category("Sapaan", "Sapaan")
     )
 
-    var abjad = arrayListOf<Dictionary>(
-        Dictionary("A", "A", "A"),
-        Dictionary("B", "B", "B"),
-        Dictionary("C", "C", "C"),
-        Dictionary("D", "D", "D"),
-        Dictionary("E", "E", "E"),
-        Dictionary("F", "F", "F"),
-        Dictionary("G", "G", "G"),
-        Dictionary("H", "H", "H"),
-        Dictionary("I", "I", "I"),
-        Dictionary("J", "J", "J"),
-        Dictionary("K", "K", "K"),
-        Dictionary("L", "L", "L")
-    )
+    var abjad = arrayListOf<Dictionary>()
 
     var kataKerja = arrayListOf<Dictionary>()
 
@@ -34,7 +32,7 @@ object SampleData {
 
     var blank = arrayListOf<Dictionary>()
 
-    fun getDictionary(category: String) : List<Dictionary>{
+    fun getCategory(category: String) : List<Dictionary>{
         return when(category){
             "Abjad" -> abjad
             "Kata Kerja" -> kataKerja
@@ -43,5 +41,26 @@ object SampleData {
             "Sapaan" -> sapaan
             else -> blank
         }
+    }
+
+    fun getEachDictionary(context: Context, row: Int, complete: (Boolean) -> Unit){
+        val eachTranslateRequest = object: JsonObjectRequest(Method.GET, "${dictionaryURL}${row}", null, Response.Listener { response ->
+            try {
+                abjad.add(Dictionary(response.getString("id"), response.getString("meaning"), "${imageURL}${response.getString("sign_type")}_${response.getString("meaning")}"))
+                complete(true)
+            } catch (e: JSONException){
+                Log.d("JSON", "EXC: ${e.localizedMessage}")
+                complete(false)
+            }
+        }, Response.ErrorListener { error ->
+            Log.d("ERROR", "Could not get this specific data: $error")
+            complete(false)
+        }){
+            override fun getBodyContentType(): String {
+                return "application/json; charset=utf-8"
+            }
+        }
+
+        Volley.newRequestQueue(context).add(eachTranslateRequest)
     }
 }

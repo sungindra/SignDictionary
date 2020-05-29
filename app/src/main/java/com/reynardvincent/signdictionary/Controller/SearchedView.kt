@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.reynardvincent.signdictionary.Adapters.DictionaryAdapter
 import com.reynardvincent.signdictionary.Model.*
+import com.reynardvincent.signdictionary.Model.SampleData.getEachDictionary
 import com.reynardvincent.signdictionary.R
 import kotlinx.android.synthetic.main.activity_searched_view.*
 
@@ -19,16 +20,15 @@ class SearchedView : AppCompatActivity() {
         setContentView(R.layout.activity_searched_view)
 
         val categoryType = intent.getStringExtra(extraCategory)
+        // signType failed to upload
         val signType = intent.getStringExtra(signType)
-
         if (signType == "sibi"){
-
+            insertJSON(1, 26)
         } else {
-
+            insertJSON(27, 52)
         }
-
         TypeTitle.text = categoryType
-        dictionaryAdapter = DictionaryAdapter(this, SampleData.getDictionary(categoryType)){ dictionary ->
+        dictionaryAdapter = DictionaryAdapter(this, SampleData.getCategory(categoryType)){ dictionary ->
             val detailIntent = Intent(this, DetailView:: class.java)
             detailIntent.putExtra(extraDictionaryKey, dictionary.key)
             detailIntent.putExtra(extraDictionaryValue, dictionary.value)
@@ -52,5 +52,15 @@ class SearchedView : AppCompatActivity() {
         val layoutManager = GridLayoutManager(this, numColumn)
         dictionaryListView.layoutManager = layoutManager
         dictionaryListView.adapter = dictionaryAdapter
+    }
+
+    fun insertJSON(startID: Int, endID: Int){
+        for(index in startID..endID ) {
+            getEachDictionary(this, index){ success->
+                if (success) {
+
+                }
+            }
+        }
     }
 }
