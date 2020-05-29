@@ -4,6 +4,8 @@ import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import androidx.recyclerview.widget.GridLayoutManager
 import com.reynardvincent.signdictionary.Adapters.DictionaryAdapter
 import com.reynardvincent.signdictionary.Model.SampleData
@@ -23,6 +25,7 @@ class SearchedView : AppCompatActivity() {
 
         val categoryType = intent.getStringExtra(extraCategory)
         TypeTitle.text = categoryType
+        backButton.text = "Back"
         dictionaryAdapter = DictionaryAdapter(this, SampleData.getDictionary(categoryType)){ dictionary ->
             val detailIntent = Intent(this, DetailView:: class.java)
             detailIntent.putExtra(extraDictionaryKey, dictionary.key)
@@ -47,5 +50,12 @@ class SearchedView : AppCompatActivity() {
         val layoutManager = GridLayoutManager(this, numColumn)
         dictionaryListView.layoutManager = layoutManager
         dictionaryListView.adapter = dictionaryAdapter
+    }
+
+    fun return2Main(view: View){
+        val backBtn = view.findViewById<Button>(R.id.backButton)
+        backBtn.setOnClickListener {
+            finish()
+        }
     }
 }

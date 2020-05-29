@@ -29,7 +29,7 @@ object SampleData {
         Dictionary("Q", "Q", "Q"),
         Dictionary("R", "R", "R"),
         Dictionary("S", "S", "S"),
-        Dictionary("T", "L", "L"),
+        Dictionary("T", "T", "T"),
         Dictionary("U", "U", "U"),
         Dictionary("V", "V", "V"),
         Dictionary("W", "W", "W"),
